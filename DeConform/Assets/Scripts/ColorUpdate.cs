@@ -8,7 +8,7 @@ public class ColorUpdate : MonoBehaviour
 {
     [SerializeField] private Camera renderTexCam;
     [SerializeField] private RenderTexture renderTex;
-    [SerializeField] private SpriteRenderer targetRenderer;
+    [SerializeField] public SpriteRenderer targetRenderer;
     [SerializeField] private float changeSpeed;
     [Space(20)]
     [SerializeField] private Image floodPanel;
@@ -46,80 +46,84 @@ public class ColorUpdate : MonoBehaviour
         //update player visuals
         if(currentMiddlePixelValue == 1)
 		{
-            if (updateHSVcol.z < 0.99)
+            if (updateHSVcol.z < 1)
             {
                 updateHSVcol.z += changeSpeed * Time.deltaTime;
             }
-			else
+			else if(updateHSVcol.y > 0)
 			{
                 updateHSVcol.y -= changeSpeed * Time.deltaTime;
             }
         }
 		else if(currentMiddlePixelValue == 0)
 		{
-            if (updateHSVcol.y < 0.99)
+            if (updateHSVcol.y < 1)
             {
                 updateHSVcol.y += changeSpeed * Time.deltaTime;
             }
-            else
+            else if(updateHSVcol.z > 0)
             {
                 updateHSVcol.z -= changeSpeed * Time.deltaTime;
             }
 
         }
 
-        if(updateHSVcol.z <= 0.01f)
-		{
-            Debug.Log("You chose black");
-            floodPanel.color = new Color(0, 0, 0, 0);
-			for (int i = 0; i < endTexts.Length; i++)
-			{
-                endTexts[i].color = new Color(1, 1, 1, 0);
-            }
+        //      if(updateHSVcol.z <= 0.01f)
+        //{
+        //          Debug.Log("You chose black");
+        //          floodPanel.color = new Color(0, 0, 0, 0);
+        //	for (int i = 0; i < endTexts.Length; i++)
+        //	{
+        //              endTexts[i].color = new Color(1, 1, 1, 0);
+        //          }
 
-            timer.text = TimeFormat(gM.playTime);
+        //          timer.text = TimeFormat(gM.playTime);
 
-            gM.animator.SetTrigger("LeavePlaying");
-            gM.gameState = GameManager.GameStates.end;
-        }
+        //          gM.animator.SetTrigger("LeavePlaying");
+        //          gM.gameState = GameManager.GameStates.end;
+        //      }
 
-        if(updateHSVcol.y <= 0.01f)
-		{
-            Debug.Log("You chose white");
-            floodPanel.color = new Color(1, 1, 1, 0);
-            for (int i = 0; i < endTexts.Length; i++)
-            {
-                endTexts[i].color = new Color(0, 0, 0, 0);
-            }
+        //      if(updateHSVcol.y <= 0.01f)
+        //{
+        //          Debug.Log("You chose white");
+        //          floodPanel.color = new Color(1, 1, 1, 0);
+        //          for (int i = 0; i < endTexts.Length; i++)
+        //          {
+        //              endTexts[i].color = new Color(0, 0, 0, 0);
+        //          }
 
-            timer.text = TimeFormat(gM.playTime);
+        //          timer.text = TimeFormat(gM.playTime);
 
-            gM.animator.SetTrigger("LeavePlaying");
-            gM.gameState = GameManager.GameStates.end;
-        }
+        //          gM.animator.SetTrigger("LeavePlaying");
+        //          gM.gameState = GameManager.GameStates.end;
+        //      }
+
+        //Clamp S & V Values
+        updateHSVcol.y = Mathf.Clamp(updateHSVcol.y, 0, 1);
+        updateHSVcol.z = Mathf.Clamp(updateHSVcol.z, 0, 1);
 
         targetRenderer.color = Color.HSVToRGB(updateHSVcol.x, updateHSVcol.y, updateHSVcol.z);
     }
 
-    string TimeFormat(float timeInSeconds)
-	{
-        int minutes = Mathf.FloorToInt((timeInSeconds / 60));
-        int seconds = Mathf.FloorToInt((timeInSeconds % 60));
-        int miliseconds = Mathf.FloorToInt((timeInSeconds * 1000) % 1000);
+	//string TimeFormat(float timeInSeconds)
+	//{
+	//	int minutes = Mathf.FloorToInt((timeInSeconds / 60));
+	//	int seconds = Mathf.FloorToInt((timeInSeconds % 60));
+	//	int miliseconds = Mathf.FloorToInt((timeInSeconds * 1000) % 1000);
 
-        string min = minutes.ToString();
-        string sec = seconds.ToString();
-        string mil = miliseconds.ToString();
+	//	string min = minutes.ToString();
+	//	string sec = seconds.ToString();
+	//	string mil = miliseconds.ToString();
 
-        if(minutes < 10)
-		{
-            min = "0" + min;
-		}
-        if(seconds < 10)
-		{
-            sec = "0" + sec;
-		}
+	//	if (minutes < 10)
+	//	{
+	//		min = "0" + min;
+	//	}
+	//	if (seconds < 10)
+	//	{
+	//		sec = "0" + sec;
+	//	}
 
-        return min + ":" + sec + "." + mil;
-	}
+	//	return min + ":" + sec + "." + mil;
+	//}
 }

@@ -34,7 +34,7 @@ Material:
     m_Ints: []
     m_Floats:
     - _NoiseOffsetX: 1
-    - _NoiseOffsetY: 0
+    - _NoiseOffsetY: 0.70867
     - _NoiseScale: 110
     - _NoiseTilingX: 1
     - _NoiseTilingY: 1
