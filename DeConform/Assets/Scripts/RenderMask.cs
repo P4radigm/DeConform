@@ -17,7 +17,7 @@ public class RenderMask : MonoBehaviour
             cameraComponent.targetTexture.Release();
 		}
 
-        cameraComponent.targetTexture = new RenderTexture(Mathf.FloorToInt(Screen.width * renderRes), Mathf.FloorToInt(Screen.height * renderRes), 24);
+        cameraComponent.targetTexture = new RenderTexture(Mathf.FloorToInt(Screen.width * renderRes), Mathf.FloorToInt(Screen.height * renderRes), 0);
         mask.texture = cameraComponent.targetTexture;
     }
 }

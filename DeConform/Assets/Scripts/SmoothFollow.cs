@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SmoothFollow : MonoBehaviour
 {
-    [SerializeField] private Transform targetTransform;
+    [SerializeField] public Transform targetTransform;
     [SerializeField] private bool followPosition;
     [SerializeField] private float positionSmoothSpeed;
     [SerializeField] private bool followRotation;
@@ -16,7 +16,7 @@ public class SmoothFollow : MonoBehaviour
 	// Update is called once per frame
 	void FixedUpdate()
     {
-
+        if(targetTransform == null) { return; }
 		if (followPosition)
 		{
             Vector3 curPos = transform.position;

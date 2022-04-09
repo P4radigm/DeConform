@@ -11,27 +11,45 @@ public class ColorUpdate : MonoBehaviour
     [SerializeField] public SpriteRenderer targetRenderer;
     [SerializeField] private float changeSpeed;
     [Space(20)]
+    private Color baseColor;
+    [SerializeField] private float disappearDuration;
+    [SerializeField] private AnimationCurve disappearCurve;
+    private Coroutine disappearRoutine;
+    [SerializeField] private float appearDuration;
+    [SerializeField] private AnimationCurve appearCurve;
+    private Coroutine appearRoutine;
+    [SerializeField] private float positionSmoothSpeed;
+    [SerializeField] private float snapDistance;
+    [SerializeField] private float rotationSmoothSpeed;
+    [SerializeField] private float snapAngle;
+    [SerializeField] private float colResetDuration;
+    [SerializeField] private AnimationCurve colResetCurve;
+    private Coroutine colResetRoutine;
+    [Space(20)]
     [SerializeField] private Image floodPanel;
     [SerializeField] private TextMeshProUGUI[] endTexts;
-    [SerializeField] private TextMeshProUGUI timer;
+    //[SerializeField] private TextMeshProUGUI timer;
     private float currentMiddlePixelValue;
     //private Color startingCol;
     private Vector3 startHSVcol;
-    private Vector3 updateHSVcol;
+    [HideInInspector] public Vector3 updateHSVcol;
     private Texture2D tex;
+
+    [HideInInspector] public bool animsOnly = true;
+    [HideInInspector] public bool followSpawnPosition = false;
 
     [SerializeField] private GameManager gM;
 
-    // Start is called before the first frame update
     void Start()
     {
+        baseColor = targetRenderer.color;
+        animsOnly = true;
         Color.RGBToHSV(targetRenderer.color, out startHSVcol.x, out startHSVcol.y, out startHSVcol.z);
         updateHSVcol = startHSVcol;
 
         tex = new Texture2D(16, 16, TextureFormat.RGB24, false);
     }
 
-    // Update is called once per frame
     void Update()
     {
         //Get middle of screen pixel value
@@ -43,6 +61,7 @@ public class ColorUpdate : MonoBehaviour
         tex.Apply();
         currentMiddlePixelValue = tex.GetPixel(8, 8).r;
 
+		if (animsOnly) { return; }
         //update player visuals
         if(currentMiddlePixelValue == 1)
 		{
@@ -65,38 +84,7 @@ public class ColorUpdate : MonoBehaviour
             {
                 updateHSVcol.z -= changeSpeed * Time.deltaTime;
             }
-
         }
-
-        //      if(updateHSVcol.z <= 0.01f)
-        //{
-        //          Debug.Log("You chose black");
-        //          floodPanel.color = new Color(0, 0, 0, 0);
-        //	for (int i = 0; i < endTexts.Length; i++)
-        //	{
-        //              endTexts[i].color = new Color(1, 1, 1, 0);
-        //          }
-
-        //          timer.text = TimeFormat(gM.playTime);
-
-        //          gM.animator.SetTrigger("LeavePlaying");
-        //          gM.gameState = GameManager.GameStates.end;
-        //      }
-
-        //      if(updateHSVcol.y <= 0.01f)
-        //{
-        //          Debug.Log("You chose white");
-        //          floodPanel.color = new Color(1, 1, 1, 0);
-        //          for (int i = 0; i < endTexts.Length; i++)
-        //          {
-        //              endTexts[i].color = new Color(0, 0, 0, 0);
-        //          }
-
-        //          timer.text = TimeFormat(gM.playTime);
-
-        //          gM.animator.SetTrigger("LeavePlaying");
-        //          gM.gameState = GameManager.GameStates.end;
-        //      }
 
         //Clamp S & V Values
         updateHSVcol.y = Mathf.Clamp(updateHSVcol.y, 0, 1);
@@ -105,25 +93,109 @@ public class ColorUpdate : MonoBehaviour
         targetRenderer.color = Color.HSVToRGB(updateHSVcol.x, updateHSVcol.y, updateHSVcol.z);
     }
 
-	//string TimeFormat(float timeInSeconds)
-	//{
-	//	int minutes = Mathf.FloorToInt((timeInSeconds / 60));
-	//	int seconds = Mathf.FloorToInt((timeInSeconds % 60));
-	//	int miliseconds = Mathf.FloorToInt((timeInSeconds * 1000) % 1000);
+	private void FixedUpdate()
+	{
+        if (!followSpawnPosition) { return; }
+        gM = GameManager.instance;
+        Vector3 curPos = transform.position;
+        Quaternion curRot = transform.rotation;
 
-	//	string min = minutes.ToString();
-	//	string sec = seconds.ToString();
-	//	string mil = miliseconds.ToString();
+        if (Quaternion.Angle(transform.rotation, gM.playerStartPos.rotation) < snapAngle) { transform.rotation = gM.playerStartPos.rotation; }
 
-	//	if (minutes < 10)
-	//	{
-	//		min = "0" + min;
-	//	}
-	//	if (seconds < 10)
-	//	{
-	//		sec = "0" + sec;
-	//	}
+        if (Vector3.Distance(curPos, gM.playerStartPos.position) < snapDistance) { transform.position = gM.playerStartPos.position; return; }
 
-	//	return min + ":" + sec + "." + mil;
-	//}
+        Vector3 targetPos = new Vector3(gM.playerStartPos.position.x, gM.playerStartPos.position.y, curPos.z);
+        Vector3 smoothedPosition = Vector3.Lerp(curPos, targetPos, positionSmoothSpeed * Time.deltaTime);
+        transform.position = smoothedPosition;
+
+        Quaternion targetRot = gM.playerStartPos.rotation;
+        Quaternion smoothedRot = Quaternion.Lerp(curRot, targetRot, rotationSmoothSpeed * Time.deltaTime);
+        transform.rotation = smoothedRot;
+    }
+
+    public void StartColorReset()
+	{
+        if (colResetRoutine != null) { return; }
+        colResetRoutine = StartCoroutine(ColorReset());
+    }
+
+    private IEnumerator ColorReset()
+	{
+        float _timeValue = 0;
+        Color _currentPlayerCol = targetRenderer.color;
+
+        while (_timeValue < 1)
+        {
+            _timeValue += Time.deltaTime / colResetDuration;
+            float _evaluatedTimeValue = colResetCurve.Evaluate(_timeValue);
+            Color _newColor = Color.Lerp(_currentPlayerCol, baseColor, _evaluatedTimeValue);
+
+            //dit update de material
+            targetRenderer.color = _newColor;
+
+            yield return null;
+        }
+
+        updateHSVcol = startHSVcol;
+        colResetRoutine = null;
+    }
+
+	public void StartDisappearAnim()
+	{
+        if(disappearRoutine != null) { return; }
+        disappearRoutine = StartCoroutine(DisappearIE());
+	}
+
+    private IEnumerator DisappearIE()
+	{
+        float _timeValue = 0;
+        Color _currentPlayerCol = targetRenderer.color;
+
+        while (_timeValue < 1)
+        {
+            _timeValue += Time.deltaTime / disappearDuration;
+            float _evaluatedTimeValue = disappearCurve.Evaluate(_timeValue);
+            float _newOpacity = Mathf.Lerp(1f, 0f, _evaluatedTimeValue);
+
+            //dit update de material
+            targetRenderer.color = new Color(_currentPlayerCol.r, _currentPlayerCol.g, _currentPlayerCol.b, _newOpacity);
+
+            yield return null;
+        }
+
+        disappearRoutine = null;
+        Destroy(this.gameObject);
+    }
+
+    public void StartAppearAnim()
+    {
+        gM = GameManager.instance;
+        gM.cU = this;
+        gM.pC = GetComponent<PlayerControls>();
+        Camera.main.GetComponent<SmoothFollow>().targetTransform = transform;
+        if (appearRoutine != null) { return; }
+        appearRoutine = StartCoroutine(AppearIE());
+    }
+
+    private IEnumerator AppearIE()
+    {
+        float _timeValue = 0;
+        Color _currentPlayerCol = targetRenderer.color;
+
+        while (_timeValue < 1)
+        {
+            _timeValue += Time.deltaTime / appearDuration;
+            float _evaluatedTimeValue = appearCurve.Evaluate(_timeValue);
+            float _newOpacity = Mathf.Lerp(0f, 1f, _evaluatedTimeValue);
+
+            //dit update de material
+            targetRenderer.color = new Color(_currentPlayerCol.r, _currentPlayerCol.g, _currentPlayerCol.b, _newOpacity);
+
+            transform.position = new Vector3(gM.playerStartPos.position.x, gM.playerStartPos.position.y, -1);
+
+            yield return null;
+        }
+
+        appearRoutine = null;
+    }
 }

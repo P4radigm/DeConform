@@ -67,6 +67,7 @@ public class TouchMessageAnimations : MonoBehaviour
             fgTouch.color = new Color(fgCol.r, fgCol.g, fgCol.b, 0);
             yield return new WaitForSeconds(initialBlinkDelay);
         }
+        addDelay = false;
 		
         float _timeValue = 0;
 
@@ -83,7 +84,6 @@ public class TouchMessageAnimations : MonoBehaviour
             yield return null;
         }
 
-        addDelay = false;
         blinkLoop = StartCoroutine(BlinkLoop());
     }
 }
