@@ -30727,7 +30727,7 @@ MonoBehaviour:
   baseGameplayC: {fileID: 1816153075}
   baseInput: {fileID: 915875793}
   baseEnd: {fileID: 508449293}
-  currentGamestate: 6
+  currentGamestate: 0
 --- !u!114 &1624189231
 MonoBehaviour:
   m_ObjectHideFlags: 0
