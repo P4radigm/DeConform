@@ -6200,7 +6200,7 @@ MonoBehaviour:
   m_OnTouchScreenKeyboardStatusChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_CaretColor: {r: 0.8, g: 0, b: 0, a: 0}
+  m_CaretColor: {r: 0.9647059, g: 0, b: 0.7921569, a: 0}
   m_CustomCaretColor: 1
   m_SelectionColor: {r: 0.5, g: 0.5, b: 0.5, a: 0.39607844}
   m_Text: 
@@ -6211,7 +6211,7 @@ MonoBehaviour:
   m_GlobalFontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_OnFocusSelectAll: 0
   m_ResetOnDeActivation: 0
-  m_RestoreOriginalTextOnEscape: 1
+  m_RestoreOriginalTextOnEscape: 0
   m_isRichTextEditingAllowed: 0
   m_LineLimit: 9
   m_InputValidator: {fileID: 0}
@@ -12975,7 +12975,7 @@ MonoBehaviour:
   renderTexCam: {fileID: 823826336}
   renderTex: {fileID: 8400000, guid: 64e8d6546c5c2c7478ef5b8b72026fa1, type: 2}
   targetRenderer: {fileID: 348640804}
-  changeSpeed: 0.08
+  changeSpeed: 0.05
   updateHSVcol: {x: 0, y: 0, z: 0}
   valueProgress: 0.5
 --- !u!114 &684911726
@@ -30727,7 +30727,7 @@ MonoBehaviour:
   baseGameplayC: {fileID: 1816153075}
   baseInput: {fileID: 915875793}
   baseEnd: {fileID: 508449293}
-  currentGamestate: 0
+  currentGamestate: 11
 --- !u!114 &1624189231
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -31197,7 +31197,7 @@ MonoBehaviour:
   renderTexCam: {fileID: 1674343392}
   renderTex: {fileID: 8400000, guid: 64e8d6546c5c2c7478ef5b8b72026fa1, type: 2}
   targetRenderer: {fileID: 1300815953}
-  changeSpeed: 0.08
+  changeSpeed: 0.05
   updateHSVcol: {x: 0, y: 0, z: 0}
   valueProgress: 0.5
 --- !u!114 &1636774544
@@ -38241,7 +38241,7 @@ MonoBehaviour:
   m_OnTouchScreenKeyboardStatusChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_CaretColor: {r: 0, g: 0.4, b: 0.8, a: 0}
+  m_CaretColor: {r: 0.9647059, g: 0, b: 0.7921569, a: 0}
   m_CustomCaretColor: 1
   m_SelectionColor: {r: 0.5, g: 0.5, b: 0.5, a: 0.39607844}
   m_Text: 
@@ -38252,7 +38252,7 @@ MonoBehaviour:
   m_GlobalFontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_OnFocusSelectAll: 0
   m_ResetOnDeActivation: 0
-  m_RestoreOriginalTextOnEscape: 1
+  m_RestoreOriginalTextOnEscape: 0
   m_isRichTextEditingAllowed: 0
   m_LineLimit: 9
   m_InputValidator: {fileID: 0}
@@ -42438,7 +42438,7 @@ MonoBehaviour:
   renderTexCam: {fileID: 2596957364547310390}
   renderTex: {fileID: 8400000, guid: 64e8d6546c5c2c7478ef5b8b72026fa1, type: 2}
   targetRenderer: {fileID: 2596957365703021561}
-  changeSpeed: 0.08
+  changeSpeed: 0.05
   updateHSVcol: {x: 0, y: 0, z: 0}
   valueProgress: 0.5
 --- !u!1 &2596957363843908750

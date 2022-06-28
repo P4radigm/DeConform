@@ -414,18 +414,18 @@ public class BaseInputDefinition : MonoBehaviour
 
     public void OnNewDefInput(string _inputString)
 	{
-        if(_inputString == "") { definitionDisplay.text = definitionPlaceholder; ownDefinition = ""; definitionInputField.caretColor = new Color(0.8f, 0, 0, 0); return; }
+        if(_inputString == "") { definitionDisplay.text = definitionPlaceholder; ownDefinition = ""; definitionInputField.caretColor = new Color(definitionInputField.caretColor.r, definitionInputField.caretColor.g, definitionInputField.caretColor.b, 0); return; }
 
-        definitionInputField.caretColor = new Color(0.8f, 0, 0, 1);
+        definitionInputField.caretColor = new Color(definitionInputField.caretColor.r, definitionInputField.caretColor.g, definitionInputField.caretColor.b, 1);
         ownDefinition = _inputString;
         definitionDisplay.text = reformatter.ReformatInputDefinitionField(_inputString, defHighlightCols);
 	}
 
     public void OnNewNameInput(string _inputString)
     {
-        if (_inputString == "" || _inputString == null) { nameDisplay.text = namePlaceholder; ownSource = ""; nameInputField.caretColor = new Color(0, 0.4f, 0.8f, 0); return; }
+        if (_inputString == "" || _inputString == null) { nameDisplay.text = namePlaceholder; ownSource = ""; new Color(definitionInputField.caretColor.r, definitionInputField.caretColor.g, definitionInputField.caretColor.b, 0); return; }
 
-        nameInputField.caretColor = new Color(0, 0.4f, 0.8f, 1);
+        nameInputField.caretColor = new Color(definitionInputField.caretColor.r, definitionInputField.caretColor.g, definitionInputField.caretColor.b, 1);
         ownSource = _inputString;
         nameDisplay.text = reformatter.ReformatInputSourceField(_inputString, sourceHighlightCol);
     }

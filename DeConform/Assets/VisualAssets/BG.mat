@@ -62,8 +62,8 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _AnimationOffsetX: 26.33104
-    - _AnimationOffsetY: 38.412994
+    - _AnimationOffsetX: 39.134262
+    - _AnimationOffsetY: 105.43112
     - _EnableExternalAlpha: 0
     - _NoiseOffsetX: 0
     - _NoiseOffsetY: 0
