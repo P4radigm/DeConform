@@ -14,10 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Camera: {fileID: 0}
   ScreenshotConfigs:
-  - Name: Oneplus9ProPortrait
-    Width: 1440
-    Height: 3216
+  - Name: 
+    Width: 1242
+    Height: 2208
     Type: 0
-  Tag: conformerenExample
+  - Name: 
+    Width: 1440
+    Height: 2560
+    Type: 0
+  Tag: Conformeren_Play2
   AppendTimestamp: 0
-  SaveFolder: Screenshots
+  SaveFolder: C:/Users/leonv/Documents/Year4HKU/02_Afstuderen/Visuals/StoreAssets/Conformeren
