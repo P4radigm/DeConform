@@ -68,7 +68,7 @@ Material:
     - _NoiseOffsetX: 0
     - _NoiseOffsetY: 0
     - _NoiseScale: 0.1
-    - _Opacity: 0.09999923
+    - _Opacity: 0
     - _QueueControl: 0
     - _QueueOffset: 0
     m_Colors:
