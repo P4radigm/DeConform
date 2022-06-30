@@ -52,9 +52,14 @@ public class SequenceManager : MonoBehaviour
     [SerializeField] private BaseGameplay baseGameplayC;
     [SerializeField] private BaseInputDefinition baseInput;
     [SerializeField] private BaseEnd baseEnd;
+    [Space(20)]
+    public bool isPhysicalDeploy;
+    [SerializeField] private string physicalDeployLocation;
     [Header("To Get")]
     public GameStates currentGamestate;
     private ContinuityManager cM;
+    private DataManager dM;
+
 
 
     void Start()
@@ -63,7 +68,8 @@ public class SequenceManager : MonoBehaviour
         {
             cM = ContinuityManager.instance;
             if (cM.hasBeenToMenu) { currentGamestate = GameStates.menu; }
-        }		
+        }
+        dM = DataManager.instance;
     }
 
     void Update()
@@ -113,8 +119,21 @@ public class SequenceManager : MonoBehaviour
                 }
                 break;
             case GameStates.location:
-                if (baseLocation.gameObject.activeInHierarchy == false)
+                if (baseLocation.gameObject.activeInHierarchy == false && !isPhysicalDeploy)
                 {
+                    baseLocation.gameObject.SetActive(true);
+                    baseLocation.StartUp();
+                    baseNotices.gameObject.SetActive(false);
+                }
+                else if(physicalDeployLocation != "")
+				{
+                    baseNotices.gameObject.SetActive(false);
+                    dM.currentSaveData.location = physicalDeployLocation;
+                    DataManager.instance.UpdateSaveFile();
+                    AddToGameState();
+                }
+				else
+				{
                     baseLocation.gameObject.SetActive(true);
                     baseLocation.StartUp();
                     baseNotices.gameObject.SetActive(false);

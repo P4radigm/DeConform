@@ -62,13 +62,13 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _AnimationOffsetX: 0
-    - _AnimationOffsetY: 0
+    - _AnimationOffsetX: 95.36064
+    - _AnimationOffsetY: 69.427605
     - _EnableExternalAlpha: 0
     - _NoiseOffsetX: 0
     - _NoiseOffsetY: 0
     - _NoiseScale: 0.16
-    - _Opacity: 0
+    - _Opacity: 0.09999961
     - _QueueControl: 0
     - _QueueOffset: 0
     m_Colors:

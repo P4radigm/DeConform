@@ -212,24 +212,28 @@ public class BaseMenu : MonoBehaviour
 
 	public void PressWebsite()
 	{
+		if (SequenceManager.instance.isPhysicalDeploy) { return; }
 		string website = "https://studenthome.hku.nl/~leon.vanoldenborgh/";
 		Application.OpenURL(website);
 	}
 
 	public void PressConformeren()
 	{
+		if (SequenceManager.instance.isPhysicalDeploy) { return; }
 		string storelink = pM.android ? "https://studenthome.hku.nl/~leon.vanoldenborgh/AndroidRedirectConformeren" : "https://studenthome.hku.nl/~leon.vanoldenborgh/AppleRedirectConformeren";
 		Application.OpenURL(storelink);
 	}
 
 	public void PressDiscussie()
 	{
+		if (SequenceManager.instance.isPhysicalDeploy) { return; }
 		string storelink = pM.android ? "https://studenthome.hku.nl/~leon.vanoldenborgh/AndroidRedirectDiscussie" : "https://studenthome.hku.nl/~leon.vanoldenborgh/AppleRedirectDiscussie";
 		Application.OpenURL(storelink);
 	}
 
 	public void PressUitzoeken()
 	{
+		if (SequenceManager.instance.isPhysicalDeploy) { return; }
 		string storelink = pM.android ? "https://studenthome.hku.nl/~leon.vanoldenborgh/AndroidRedirectUitzoeken" : "https://studenthome.hku.nl/~leon.vanoldenborgh/AppleRedirectUitzoeken";
 		Application.OpenURL(storelink);
 	}
