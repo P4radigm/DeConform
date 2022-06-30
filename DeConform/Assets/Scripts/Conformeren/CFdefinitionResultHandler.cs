@@ -62,6 +62,10 @@ public class CFdefinitionResultHandler : MonoBehaviour
 			serverString = dataManager.currentSaveData.gameResult;
 		}
 
+		timeText.enabled = false;
+		elementOne.enabled = false;
+		elementTwo.enabled = false;
+		elementThree.enabled = false;
 		timeText.color = new Color(timeText.color.r, timeText.color.g, timeText.color.b, 0);
 		elementOne.color = new Color(0, 0, 0, 0);
 		elementTwo.color = new Color(0, 0, 0, 0);
@@ -118,6 +122,10 @@ public class CFdefinitionResultHandler : MonoBehaviour
 
 		if (animateInInit)
 		{
+			timeText.enabled = true;
+			elementOne.enabled = true;
+			elementTwo.enabled = true;
+			elementThree.enabled = true;
 			animateInTimeValue = 0;
 			animateInInit = false;
 		}
